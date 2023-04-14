@@ -20,6 +20,7 @@ class EnterpriseDigestResource extends BaseResource
             # Denominations as comma separated string
             'denomination' => $this->denominations->pluck('Denomination')->implode(' ; '),
             'addresses' => $this->addresses->pluck('short')->implode(' ; '),
+
             'NACE2008_main'
                 => $this->activities->where('Classification', "MAIN")
                 ->where('NaceVersion', '2008')

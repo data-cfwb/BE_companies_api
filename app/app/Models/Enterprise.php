@@ -124,7 +124,7 @@ class Enterprise extends Model
             ],
             'address' => [
                 'service_name' => 'Address',
-                'href' =>  'https://www.openstreetmap.org/search?query=' . urlencode($this->addresses->first()->short),
+                'href' => ($this->addresses->first() ? 'https://www.openstreetmap.org/search?query=' . urlencode($this->addresses->first()->short) : 'no address found'),
             ],
 
         ];

@@ -14,7 +14,7 @@
     },
     "servers": [
         {
-            "url": "http://be_companies_api.tintamarre.be",
+            "url": "https://be-companies.tintamarre.be/",
             "description": "BE Companies API Server"
         }
     ],
