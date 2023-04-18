@@ -77,6 +77,11 @@ class Enterprise extends Model
         return $this->hasMany(Establishment::class, 'EnterpriseNumber', 'EnterpriseNumber');
     }
 
+    public function subsidies()
+    {
+        return $this->hasMany(Subsidie::class, 'EnterpriseNumber', 'EnterpriseNumber');
+    }
+
     public function branches()
     {
         return $this->hasMany(Branch::class, 'EnterpriseNumber', 'EnterpriseNumber');

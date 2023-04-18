@@ -34,6 +34,8 @@ class EnterpriseResource extends BaseResource
             // load activities through new resource
             'Activities' => EnterpriseActivityResource::collection($this->activities),
 
+            'Subsidies' => $this->subsidies,
+
             'Branches' => $this->branches,
 
             'Status' => $this->Status,
