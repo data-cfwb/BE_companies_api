@@ -35,6 +35,8 @@ class EnterpriseResource extends BaseResource
             'Activities' => EnterpriseActivityResource::collection($this->activities),
 
             'Subsidies' => $this->subsidies,
+            
+            'SubsidiesPerYer' => $this->subsidies_group_by_year,
 
             'Branches' => $this->branches,
 

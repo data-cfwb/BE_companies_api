@@ -2,7 +2,7 @@ version: "3"
 services:
   nginx:
     image: nginx:1.17.9
-    restart: on-failure:3
+    restart: always
     ports: #change if prod
       - 9042:80
         #- 9443:443
@@ -19,7 +19,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
-    restart: on-failure:3
+    restart: always
     volumes:
       - ./app:/var/www:delegated
     networks:

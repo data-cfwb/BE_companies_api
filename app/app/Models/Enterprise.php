@@ -82,6 +82,15 @@ class Enterprise extends Model
         return $this->hasMany(Subsidie::class, 'EnterpriseNumber', 'EnterpriseNumber');
     }
 
+    public function subsidies_group_by_year()
+    {
+        return $this->hasMany(Subsidie::class, 'EnterpriseNumber', 'EnterpriseNumber')
+        ->selectRaw('sum("Montant du soutien (€)") as total, Annee as year')
+        ->groupBy('year')
+        ->orderBy('year');
+
+    }
+
     public function branches()
     {
         return $this->hasMany(Branch::class, 'EnterpriseNumber', 'EnterpriseNumber');
