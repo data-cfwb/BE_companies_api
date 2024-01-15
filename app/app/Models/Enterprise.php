@@ -103,6 +103,21 @@ class Enterprise extends Model
         ->orderBy('Classification');
     }
 
+    public function getSubsidiesGroupByYearForChartAttribute()
+    {
+        $labels = $this->subsidies_group_by_year->map(function ($item, $key) {
+            return $item->year;
+        });
+
+        $values = $this->subsidies_group_by_year->map(function ($item, $key) {
+            return $item->total;
+        });
+
+        return [
+            'labels' => $labels,
+            'values' => $values,
+        ];
+    }
 
     ## EnterpriseNumber without the dot
     public function getEnterpriseNumberDotLessAttribute()
