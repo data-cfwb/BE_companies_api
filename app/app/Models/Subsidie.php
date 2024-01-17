@@ -9,5 +9,9 @@ class Subsidie extends Model
 {
 
     protected $table = 'subsidies';
-
+   // define the variables and their types
+   protected $casts = [
+    'AmountInEuros' => 'float',
+    'Year' => 'integer'
+    ];
 }

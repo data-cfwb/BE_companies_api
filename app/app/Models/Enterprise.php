@@ -85,10 +85,9 @@ class Enterprise extends Model
     public function subsidies_group_by_year()
     {
         return $this->hasMany(Subsidie::class, 'EnterpriseNumber', 'EnterpriseNumber')
-        ->selectRaw('sum("AmountInEuros") as total, Year as year')
+        ->selectRaw('format(round(sum("AmountInEuros"), 2),2) as total, Year as year')
         ->groupBy('year')
-        ->orderBy('year');
-
+        ->orderBy('year', 'desc');
     }
 
     public function branches()
@@ -115,8 +114,14 @@ class Enterprise extends Model
 
         return [
             'labels' => $labels,
-            'values' => $values,
+            'values' => $values
         ];
+    }
+    public function getSubsidiesMapByYearForChartAttribute()
+    {
+        $this->subsidies_group_by_year->mapToGroups(function ($item, $key) {
+            return [$item->year => $item];
+        });
     }
 
     ## EnterpriseNumber without the dot
@@ -151,7 +156,7 @@ class Enterprise extends Model
                 'service_name' => 'Banque-Carrefour des Entreprises',
                 'href' =>  'https://kbopub.economie.fgov.be/kbopub/toonondernemingps.html?lang=fr&ondernemingsnummer=' . $this->EnterpriseNumberDotLess,
             ],
-            'address' => [
+            'map' => [
                 'service_name' => 'Address',
                 'href' => ($this->addresses->first() ? 'https://www.openstreetmap.org/search?query=' . urlencode($this->addresses->first()->short) : 'no address found'),
             ],

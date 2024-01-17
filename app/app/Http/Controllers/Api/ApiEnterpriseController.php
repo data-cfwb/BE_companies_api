@@ -87,8 +87,8 @@ class ApiEnterpriseController extends Controller
     public function random()
     {
         # find a random enterprise
-        $enterprise = Enterprise::inRandomOrder()->first();
+        $enterprise = Enterprise::whereHas('subsidies')->inRandomOrder()->first();
 
-        return new EnterpriseDigestResource($enterprise);
+        return new EnterpriseResource($enterprise);
     }
 }
