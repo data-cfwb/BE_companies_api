@@ -102,6 +102,11 @@ class Enterprise extends Model
         ->orderBy('Classification');
     }
 
+    public function getSubsidiesMapByYearAttribute()
+    {
+        return $this->subsidies->groupBy('Year');
+    }
+
     public function getSubsidiesGroupByYearForChartAttribute()
     {
         $labels = $this->subsidies_group_by_year->map(function ($item, $key) {
@@ -117,12 +122,7 @@ class Enterprise extends Model
             'values' => $values
         ];
     }
-    public function getSubsidiesMapByYearForChartAttribute()
-    {
-        $this->subsidies_group_by_year->mapToGroups(function ($item, $key) {
-            return [$item->year => $item];
-        });
-    }
+
 
     ## EnterpriseNumber without the dot
     public function getEnterpriseNumberDotLessAttribute()
@@ -159,6 +159,22 @@ class Enterprise extends Model
             'map' => [
                 'service_name' => 'Address',
                 'href' => ($this->addresses->first() ? 'https://www.openstreetmap.org/search?query=' . urlencode($this->addresses->first()->short) : 'no address found'),
+            ],
+            'cadastre_2019' => [
+                'service_name' => 'Cadastre des subventions 2019',
+                'href' => 'https://www.odwb.be/explore/dataset/fwb-cadastre-des-subventions-2019/table/?disjunctive.ministre&disjunctive.competence&disjunctive.administration&disjunctive.code_postal&disjunctive.forme_juridique&sort=-liquidation&q=' . urlencode($this->denominations->first()->Denomination),
+            ],
+            'cadastre_2020' => [
+                'service_name' => 'Cadastre des subventions 2020',
+                'href' => 'https://www.odwb.be/explore/dataset/fwb-cadastre-subventions-2020/table/?disjunctive.ministre&disjunctive.competence&disjunctive.administration&disjunctive.code_postal&disjunctive.forme_juridique&sort=-liquidation&q=' . urlencode($this->denominations->first()->Denomination),
+            ],
+            'cadastre_2021' => [
+                'service_name' => 'Cadastre des subventions 2021',
+                'href' => 'https://www.odwb.be/explore/dataset/fwb-cadastre-des-subventions-2021/table/?disjunctive.ministre&disjunctive.competence&disjunctive.administration&disjunctive.code_postal&disjunctive.forme_juridique&sort=-liquidation&q=' . urlencode($this->denominations->first()->Denomination),
+            ],
+            'cadastre_2022' => [
+                'service_name' => 'Cadastre des subventions 2022',
+                'href' => 'https://www.odwb.be/explore/dataset/fwb-cadastre-des-subventions-2022/table/?disjunctive.ministre&disjunctive.competence&disjunctive.administration&disjunctive.code_postal&disjunctive.forme_juridique&sort=-liquidation&q=' . urlencode($this->denominations->first()->Denomination),
             ],
 
         ];

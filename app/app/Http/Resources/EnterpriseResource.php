@@ -36,6 +36,8 @@ class EnterpriseResource extends BaseResource
 
             'Subsidies' => $this->subsidies,
             
+            'SubsidiesMapByYear' => $this->subsidies_map_by_year,
+
             'SubsidiesPerYear' => $this->subsidies_group_by_year,
             'SubsidiesPerYearForChart' => $this->subsidies_group_by_year_for_chart,
 
