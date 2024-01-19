@@ -27,10 +27,12 @@ class HomePageResource extends BaseResource
                 ],
                 [
                     'title' => 'custom_methods',
-                    'examples' => [
-                        'random' => route('enterprises.random'),
-                    ]
-                ]
+                    'methods' => [
+                        'random' => route('api.enterprises.random'),
+                        'lookup' => route('api.enterprises.lookup'),
+                        'stats' => route('api.stats')
+                    ],
+                ],
             ],
         ];
     }

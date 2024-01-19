@@ -24,20 +24,23 @@ use App\Http\Controllers\Api\BaseController;
 Route::get('/', 
     [BaseController::class, 'index'])->name('api.index');
 
+Route::get('/stats', 
+     [BaseController::class, 'stats'])->name('api.stats');
+
 Route::get('/enterprises/random/', 
-    [ApiEnterpriseController::class, 'random'])->name('enterprises.random');
+    [ApiEnterpriseController::class, 'random'])->name('api.enterprises.random');
 
 Route::get('/enterprises/lookup/', 
-    [ApiEnterpriseController::class, 'lookup'])->name('enterprises.lookup');
+    [ApiEnterpriseController::class, 'lookup'])->name('api.enterprises.lookup');
 
 Route::get('/enterprises/{EnterpriseNumber}', 
-    [ApiEnterpriseController::class, 'show'])->name('enterprises.show');
+    [ApiEnterpriseController::class, 'show'])->name('api.enterprises.show');
 
 Route::get('/enterprises/{EnterpriseNumber}/digest', 
-    [ApiEnterpriseController::class, 'showDigest'])->name('enterprises.showDigest');
+    [ApiEnterpriseController::class, 'showDigest'])->name('api.enterprises.showDigest');
 
 Route::get('/codes/{category}/{code}/{language}', 
-    [ApiCodeController::class, 'show'])->name('codes.show');
+    [ApiCodeController::class, 'show'])->name('api.codes.show');
 
 Route::get('/naces/{naceArray}', 
     [ApiNaceController::class, 'get'])->name('naces.get');

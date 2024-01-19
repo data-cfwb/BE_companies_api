@@ -61,8 +61,8 @@ class EnterpriseDigestResource extends BaseResource
             
             'StartDate' => $this->StartDate,
             'links' => [
-                'self' => route('enterprises.showDigest', [$this->EnterpriseNumber]),
-                'exhaustive_info' => route('enterprises.show', [$this->EnterpriseNumber]),
+                'self' => route('api.enterprises.showDigest', [$this->EnterpriseNumber]),
+                'exhaustive_info' => route('api.enterprises.show', [$this->EnterpriseNumber]),
             ],
             // 'Denominations' => $this->denominations,
 

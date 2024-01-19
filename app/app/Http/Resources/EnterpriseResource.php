@@ -63,8 +63,8 @@ class EnterpriseResource extends BaseResource
 
             'ExternalLinks' => $this->ExternalLinks,
             'links' => [
-                'self' => route('enterprises.show', [$this->EnterpriseNumber]),
-                'digest_info' => route('enterprises.showDigest', [$this->EnterpriseNumber])
+                'self' => route('api.enterprises.show', [$this->EnterpriseNumber]),
+                'digest_info' => route('api.enterprises.showDigest', [$this->EnterpriseNumber])
             ],
         ];
 
