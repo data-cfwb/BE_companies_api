@@ -20,23 +20,24 @@ use App\Http\Controllers\Api\BaseController;
 |
 */
 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
 
-// define name api.index
-Route::get('/', [BaseController::class, 'index'])->name('api.index');
+Route::get('/', 
+    [BaseController::class, 'index'])->name('api.index');
 
+Route::get('/enterprises/random/', 
+    [ApiEnterpriseController::class, 'random'])->name('enterprises.random');
 
-Route::get('/enterprises/random/', [ApiEnterpriseController::class, 'random'])->name('enterprises.random');
+Route::get('/enterprises/lookup/', 
+    [ApiEnterpriseController::class, 'lookup'])->name('enterprises.lookup');
 
-// lookup
-Route::get('/enterprises/lookup/', [ApiEnterpriseController::class, 'lookup'])->name('enterprises.lookup');
+Route::get('/enterprises/{EnterpriseNumber}', 
+    [ApiEnterpriseController::class, 'show'])->name('enterprises.show');
 
-Route::get('/enterprises/{EnterpriseNumber}', [ApiEnterpriseController::class, 'show'])->name('enterprises.show');
+Route::get('/enterprises/{EnterpriseNumber}/digest', 
+    [ApiEnterpriseController::class, 'showDigest'])->name('enterprises.showDigest');
 
-Route::get('/enterprises/{EnterpriseNumber}/digest', [ApiEnterpriseController::class, 'showDigest'])->name('enterprises.showDigest');
+Route::get('/codes/{category}/{code}/{language}', 
+    [ApiCodeController::class, 'show'])->name('codes.show');
 
-Route::get('/codes/{category}/{code}/{language}', [ApiCodeController::class, 'show'])->name('codes.show');
-
-Route::get('/naces/{naceArray}', [ApiNaceController::class, 'get'])->name('naces.get');
+Route::get('/naces/{naceArray}', 
+    [ApiNaceController::class, 'get'])->name('naces.get');

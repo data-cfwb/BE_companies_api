@@ -123,6 +123,11 @@ class Enterprise extends Model
         ];
     }
 
+    public function getActivitiesMapByClassificationAttribute()
+    {
+        return $this->activities
+        ->groupBy('Classification');
+    }
 
     ## EnterpriseNumber without the dot
     public function getEnterpriseNumberDotLessAttribute()

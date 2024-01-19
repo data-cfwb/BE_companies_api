@@ -15,7 +15,11 @@ class Establishment extends Model
     protected $casts = [
         'EstablishmentNumber' => 'string',
         'EnterpriseNumber' => 'string',
-        'StartDate' => 'date',
+        'StartDate' => 'datetime'
+    ];
+
+    protected $dates = [
+        'StartDate'
     ];
 
     public function enterprise()

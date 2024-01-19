@@ -20,6 +20,7 @@ services:
       context: .
       dockerfile: Dockerfile.dev
     restart: always
+    user: 'www-data:www-data'
     volumes:
       - ./app:/var/www:delegated
     networks:
