@@ -32,8 +32,7 @@ class EnterpriseResource extends BaseResource
             'Establishments' => $this->establishments,
             
             // load activities through new resource
-            // 'Activities' => EnterpriseActivityResource::collection($this->activities),
-            'ActivitiesMapByClassification' => $this->activities_map_by_classification,
+            'Activities' => EnterpriseActivityResource::collection($this->activities),
 
             // 'Subsidies' => $this->subsidies,
 

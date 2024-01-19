@@ -79,12 +79,12 @@ class Enterprise extends Model
 
     public function subsidies()
     {
-        return $this->hasMany(Subsidie::class, 'EnterpriseNumber', 'EnterpriseNumber')->orderBy('Year', 'desc');
+        return $this->hasMany(Subsidy::class, 'EnterpriseNumber', 'EnterpriseNumber')->orderBy('Year', 'desc');
     }
 
     public function subsidies_group_by_year()
     {
-        return $this->hasMany(Subsidie::class, 'EnterpriseNumber', 'EnterpriseNumber')
+        return $this->hasMany(Subsidy::class, 'EnterpriseNumber', 'EnterpriseNumber')
         ->selectRaw('format(round(sum("AmountInEuros"), 2),2) as total, Year as year')
         ->groupBy('year')
         ->orderBy('year', 'asc');
@@ -104,7 +104,9 @@ class Enterprise extends Model
 
     public function getSubsidiesMapByYearAttribute()
     {
-        return $this->subsidies->groupBy('Year')->orderBy('Year', 'desc');
+        return $this->subsidies->groupBy('Year');
+
+
     }
 
     public function getSubsidiesGroupByYearForChartAttribute()
