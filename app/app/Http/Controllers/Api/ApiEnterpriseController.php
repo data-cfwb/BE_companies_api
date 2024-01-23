@@ -55,34 +55,7 @@ class ApiEnterpriseController extends Controller
         return new EnterpriseDigestResource($enterprise);
     }
 
-    // get arguments from the url
-    public function lookup(Request $request)
-    {
-        $enterprisesNumber = Denomination::where('Denomination', 'like', '%' . $request->input('name') . '%')->pluck('EntityNumber')->toArray();
-
-        # filter with Zipcode
-        if ($request->input('Zipcode')) {
-            $enterprises = Enterprise::whereIn('EnterpriseNumber', $enterprisesNumber)->with(
-                ['addresses', 'denominations']
-            )->whereHas('addresses', function ($query) use ($request) {
-                $query->where('Zipcode', $request->input('Zipcode'));
-            })->get();
-        } else {
-            $enterprises = Enterprise::whereIn('EnterpriseNumber', $enterprisesNumber)->with(
-                ['addresses', 'denominations']
-            )->get();
-        }
-        
-        $enterprises->load('contacts', 'establishments', 'activities', 'branches');
-        
-        // return the data with the input
-        return [
-            'input' => $request->all(),
-            'results' => $enterprises->count(),
-            // using ressource
-            'enterprises' => EnterpriseDigestResource::collection($enterprises),
-        ];
-    }
+    
 
     public function random()
     {

@@ -85,9 +85,9 @@ class Enterprise extends Model
     public function subsidies_group_by_year()
     {
         return $this->hasMany(Subsidy::class, 'EnterpriseNumber', 'EnterpriseNumber')
-        ->selectRaw('format(round(sum("AmountInEuros"), 2),2) as total, Year as year')
-        ->groupBy('year')
-        ->orderBy('year', 'asc');
+        ->selectRaw('format(round(sum("AmountInEuros"), 2),2) as total, Year')
+        ->groupBy('Year')
+        ->orderBy('Year', 'asc');
     }
 
     public function branches()
@@ -106,13 +106,12 @@ class Enterprise extends Model
     {
         return $this->subsidies->groupBy('Year');
 
-
     }
 
     public function getSubsidiesGroupByYearForChartAttribute()
     {
         $labels = $this->subsidies_group_by_year->map(function ($item, $key) {
-            return $item->year;
+            return $item->Year;
         });
 
         $values = $this->subsidies_group_by_year->map(function ($item, $key) {

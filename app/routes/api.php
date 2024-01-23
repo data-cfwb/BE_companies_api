@@ -27,11 +27,11 @@ Route::get('/',
 Route::get('/stats', 
      [BaseController::class, 'stats'])->name('api.stats');
 
+Route::get('/lookup', 
+    [BaseController::class, 'lookup'])->name('api.lookup');
+ 
 Route::get('/enterprises/random/', 
     [ApiEnterpriseController::class, 'random'])->name('api.enterprises.random');
-
-Route::get('/enterprises/lookup/', 
-    [ApiEnterpriseController::class, 'lookup'])->name('api.enterprises.lookup');
 
 Route::get('/enterprises/{EnterpriseNumber}', 
     [ApiEnterpriseController::class, 'show'])->name('api.enterprises.show');
@@ -41,6 +41,9 @@ Route::get('/enterprises/{EnterpriseNumber}/digest',
 
 Route::get('/codes/{category}/{code}/{language}', 
     [ApiCodeController::class, 'show'])->name('api.codes.show');
+
+Route::get('/codes/{category}/{code}/{language}/insights', 
+    [ApiCodeController::class, 'insights'])->name('api.codes.insights');
 
 Route::get('/naces/{naceArray}', 
     [ApiNaceController::class, 'get'])->name('naces.get');

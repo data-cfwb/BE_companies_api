@@ -7,6 +7,10 @@ use App\Http\Resources\HomePageResource;
 use App\Http\Controllers\Controller;
 use App\Models\Enterprise;
 use App\Models\Subsidy;
+use App\Models\Denomination;
+
+use App\Http\Resources\EnterpriseDigestResource;
+
 
 class BaseController extends Controller
 {
@@ -45,7 +49,6 @@ class BaseController extends Controller
      */
     public function stats()
     {
-   
             return response()->json([
                 'data' => [
                     [
@@ -66,5 +69,34 @@ class BaseController extends Controller
                 ]
             ]);
         
+    }
+
+    // get arguments from the url
+    public function lookup(Request $request)
+    {
+        $enterprisesNumber = Denomination::where('Denomination', 'like', '%' . $request->input('name') . '%')->pluck('EntityNumber')->toArray();
+
+        # filter with Zipcode
+        if ($request->input('Zipcode')) {
+            $enterprises = Enterprise::whereIn('EnterpriseNumber', $enterprisesNumber)->with(
+                ['addresses', 'denominations']
+            )->whereHas('addresses', function ($query) use ($request) {
+                $query->where('Zipcode', $request->input('Zipcode'));
+            })->get();
+        } else {
+            $enterprises = Enterprise::whereIn('EnterpriseNumber', $enterprisesNumber)->with(
+                ['addresses', 'denominations']
+            )->get();
+        }
+        
+        $enterprises->load('contacts', 'establishments', 'activities', 'branches');
+        
+        // return the data with the input
+        return [
+            'input' => $request->all(),
+            'results' => $enterprises->count(),
+            // using ressource
+            'enterprises' => EnterpriseDigestResource::collection($enterprises),
+        ];
     }
 }
