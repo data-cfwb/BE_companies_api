@@ -4,9 +4,14 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Api\BaseController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 use App\Models\Code;
 use App\Models\Enterprise;
+use App\Models\Activity;
+use App\Models\Subsidy;
+
+use App\Http\Resources\EnterpriseDigestResource;
 
 class ApiCodeController extends BaseController
 {
@@ -17,26 +22,35 @@ class ApiCodeController extends BaseController
      */
     public function show($category, $code, $language)
     {
-        # get the code
         $code = Code::where('Category', $category)->where('Code', $code)->where('Language', $language)->firstOrFail();
 
-        # return the data
         return $code;
     }
 
     public function insights($category, $code, $language)
     {
+        $NaceVersion = 'Nace' . $category;
         # get the code
-        $code = Code::where('Category', $category)->where('Code', $code)->where('Language', $language)->firstOrFail();
+        $code = Code::where('Category', $NaceVersion)->where('Code', $code)->where('Language', $language)->firstOrFail();
 
-        $top_20 = Enterprise::whereHas('subsidies')->inRandomOrder()->limit(20)->get();
+      
+        $enterprises_total = Enterprise::whereHas('activities', function ($query) use ($category, $code) {
+            $query->where('NaceVersion', $category)->where('NaceCode', $code->Code);
+        })->get();
+        
+        $entreprises_subsidized = Enterprise::whereIn('EnterpriseNumber', $enterprises_total->pluck('EnterpriseNumber'))->whereHas('subsidies')->get();
+
+        // sum of subsidies
+        $subsidies_total = Subsidy::whereIn('EnterpriseNumber', $entreprises_subsidized->pluck('EnterpriseNumber'))->sum('AmountInEuros');
+
+        $all_enterprises = Enterprise::whereIn('EnterpriseNumber', $entreprises_subsidized->pluck('EnterpriseNumber'))->inRandomOrder()->get();
 
         return [
             'code' => $code,
-            'enterprises_total' => 92837,
-            'enterprises_subsidized' => 345,
-            'subsidies_total' => 9990987,
-            'top_20' => $top_20
+            'enterprises_total' => $enterprises_total->count(),
+            'enterprises_subsidized' => $entreprises_subsidized->count(),
+            'subsidies_total' => number_format($subsidies_total, 2, ',', ' '),
+            'all_enterprises' => EnterpriseDigestResource::collection($all_enterprises)
         ];
     }
 }

@@ -59,6 +59,8 @@ class EnterpriseDigestResource extends BaseResource
             'juridical_form_cac_fr' => $this->JuridicalFormCACLabel->where('Language', 'FR')->pluck('Description')->implode(', '),
             'juridical_form_cac_nl' => $this->JuridicalFormCACLabel->where('Language', 'NL')->pluck('Description')->implode(', '),
             
+            'subsidies_sum' => number_format($this->subsidies->sum('AmountInEuros'), 2, ',', ' '),
+
             'StartDate' => $this->StartDate,
             'links' => [
                 'self' => route('api.enterprises.showDigest', [$this->EnterpriseNumber]),
