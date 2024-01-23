@@ -85,7 +85,7 @@ class Enterprise extends Model
     public function subsidies_group_by_year()
     {
         return $this->hasMany(Subsidy::class, 'EnterpriseNumber', 'EnterpriseNumber')
-        ->selectRaw('format(round(sum("AmountInEuros"), 2),2) as total, Year')
+        ->selectRaw('sum("AmountInEuros") as total, Year')
         ->groupBy('Year')
         ->orderBy('Year', 'asc');
     }

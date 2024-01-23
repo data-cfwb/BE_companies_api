@@ -30,7 +30,7 @@ class EnterpriseDigestResource extends BaseResource
                 => $this->activities->where('Classification', "SECO")
                 ->where('NaceVersion', '2008')
                 ->pluck('NaceCode')->implode(', '),
-                
+
             'NACE2003_main'
                 => $this->activities->where('Classification', "MAIN")
                 ->where('NaceVersion', '2003')
@@ -60,7 +60,7 @@ class EnterpriseDigestResource extends BaseResource
             'juridical_form_cac_fr' => $this->JuridicalFormCACLabel->where('Language', 'FR')->pluck('Description')->implode(', '),
             'juridical_form_cac_nl' => $this->JuridicalFormCACLabel->where('Language', 'NL')->pluck('Description')->implode(', '),
             
-            'subsidies_sum' => number_format($this->subsidies->sum('AmountInEuros'), 2, ',', ' '),
+            'subsidies_sum' => $this->subsidies->sum('AmountInEuros'),
 
             'StartDate' => $this->StartDate,
             'links' => [

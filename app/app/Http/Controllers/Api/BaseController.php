@@ -52,9 +52,9 @@ class BaseController extends Controller
             return response()->json([
                 'data' => [
                     [
-                        'name' => 'Nombre d\'organismes subventionnés',
+                        'name' => 'Nombre d\'organisations subventionnées',
                         'stat' => Subsidy::distinct('Postal-OrgName_Slug')->count(),
-                        'unit' => 'organismes'
+                        'unit' => 'organisations'
                     ],
                     [
                         'name' => 'Montant total des subventions',
