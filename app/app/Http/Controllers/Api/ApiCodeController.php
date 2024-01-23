@@ -49,7 +49,7 @@ class ApiCodeController extends BaseController
             'code' => $code,
             'enterprises_total' => $enterprises_total->count(),
             'enterprises_subsidized' => $entreprises_subsidized->count(),
-            'subsidies_total' => number_format($subsidies_total, 2, ',', ' '),
+            'subsidies_total' => $subsidies_total,
             'all_enterprises' => EnterpriseDigestResource::collection($all_enterprises)
         ];
     }
