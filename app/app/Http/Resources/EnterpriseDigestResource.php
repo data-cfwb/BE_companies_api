@@ -30,6 +30,7 @@ class EnterpriseDigestResource extends BaseResource
                 => $this->activities->where('Classification', "SECO")
                 ->where('NaceVersion', '2008')
                 ->pluck('NaceCode')->implode(', '),
+                
             'NACE2003_main'
                 => $this->activities->where('Classification', "MAIN")
                 ->where('NaceVersion', '2003')
