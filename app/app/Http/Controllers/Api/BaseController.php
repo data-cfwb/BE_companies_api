@@ -58,7 +58,7 @@ class BaseController extends Controller
                     ],
                     [
                         'name' => 'Montant total des subventions',
-                        'stat' => round(Subsidy::sum('AmountInEuros') / 1000000000, 3),
+                        'stat' => Subsidy::sum('AmountInEuros') / 1000000000, // in billions
                         'unit' => 'milliards d\'euros'
                     ],
                     [

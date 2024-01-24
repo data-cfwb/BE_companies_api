@@ -29,7 +29,7 @@ class HomePageResource extends BaseResource
                     'title' => 'custom_methods',
                     'methods' => [
                         'random' => route('api.enterprises.random'),
-                        'lookup' => route('api.enterprises.lookup'),
+                        'lookup' => route('api.lookup'),
                         'stats' => route('api.stats')
                     ],
                 ],

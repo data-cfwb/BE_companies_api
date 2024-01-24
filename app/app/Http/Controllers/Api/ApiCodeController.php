@@ -53,4 +53,28 @@ class ApiCodeController extends BaseController
             'all_enterprises' => EnterpriseDigestResource::collection($all_enterprises)
         ];
     }
+
+    public function insights($category, $code, $language)
+    {
+        $NaceVersion = 'Nace' . $category;
+        # get the code
+        $code = Code::where('Category', $NaceVersion)->where('Code', $code)->where('Language', $language)->firstOrFail();
+
+        $enterprises_total = Enterprise::whereHas('activities', function ($query) use ($category, $code) {
+            $query->where('NaceVersion', $category)->where('NaceCode', $code->Code);
+        })->get();
+        
+        // save the data in a csv file
+        $file_path = storage_path('app/public/insights.csv');
+        $file = fopen($file_path, 'w');
+        fputcsv($file, ['EnterpriseNumber', 'Denomination', 'Address', 'Zipcode', 'City', 'AmountInEuros', 'SubsidyYear', 'SubsidyNumber',
+        'SubsidyType
+        ']);
+
+        
+        // download the data
+        // return Storage::download('file.jpg', $name, $headers);
+        return response()->download($file_path);
+       
+    }
 }

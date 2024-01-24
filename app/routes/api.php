@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ApiEnterpriseController;
 use App\Http\Controllers\Api\ApiNaceController;
 use App\Http\Controllers\Api\ApiCodeController;
+use App\Http\Controllers\Api\ApiSubsidyController;
 
 use App\Http\Controllers\Api\BaseController;
 
@@ -47,3 +48,6 @@ Route::get('/codes/{category}/{code}/{language}/insights',
 
 Route::get('/naces/{naceArray}', 
     [ApiNaceController::class, 'get'])->name('naces.get');
+
+Route::get('/subsidies/{subsidies_category}', 
+    [ApiSubsidyController::class, 'show'])->name('subsidies.show');
