@@ -51,3 +51,6 @@ Route::get('/naces/{naceArray}',
 
 Route::get('/subsidies/{subsidies_category}', 
     [ApiSubsidyController::class, 'show'])->name('subsidies.show');
+
+Route::get('/subsidies/', 
+    [ApiSubsidyController::class, 'get'])->name('subsidies.get');

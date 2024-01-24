@@ -23,7 +23,10 @@ class EnterpriseResource extends BaseResource
             'EnterpriseNumberDotLess' => $this->EnterpriseNumberDotLess,
             'EnterpriseNumberBE' => $this->EnterpriseNumberBE,
             
-            'Denominations' => $this->denominations,
+            'Denominations' => DenominationResource::collection($this->denominations),
+            // 'addresses' => $this->addresses->pluck('short')->implode(' ; '),
+
+            'Languages' => $this->languages,
 
             'Addresses' => $this->addresses,
 

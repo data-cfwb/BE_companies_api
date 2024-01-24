@@ -62,6 +62,7 @@ class Enterprise extends Model
         return $this->hasMany(Denomination::class, 'EntityNumber', 'EnterpriseNumber');
     }
 
+
     public function addresses()
     {
         return $this->hasMany(Address::class, 'EntityNumber', 'EnterpriseNumber');
@@ -102,10 +103,14 @@ class Enterprise extends Model
         ->orderBy('Classification');
     }
 
+    public function getLanguagesAttribute()
+    {
+        return $this->denominations->pluck('short_language_label')->unique();
+    }
+
     public function getSubsidiesMapByYearAttribute()
     {
         return $this->subsidies->groupBy('Year');
-
     }
 
     public function getSubsidiesGroupByYearForChartAttribute()

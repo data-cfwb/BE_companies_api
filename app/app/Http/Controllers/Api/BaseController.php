@@ -57,7 +57,7 @@ class BaseController extends Controller
                         'unit' => 'organisations'
                     ],
                     [
-                        'name' => 'Montant total des subventions',
+                        'name' => 'Montant total des subventions répertoriées',
                         'stat' => Subsidy::sum('AmountInEuros') / 1000000000, // in billions
                         'unit' => 'milliards d\'euros'
                     ],

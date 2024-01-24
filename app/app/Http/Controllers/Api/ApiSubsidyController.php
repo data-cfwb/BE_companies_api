@@ -13,6 +13,16 @@ use App\Models\Subsidy;
 
 class ApiSubsidyController extends BaseController
 {
+    public function get()
+    {
+        $distinct_competences = Subsidy::distinct('Compétence')->pluck('Compétence')->toArray();
+
+        return [
+            'distinct_competences' => $distinct_competences
+        ];
+
+    }
+    
     /**
      * Create a new controller instance.
      *
@@ -35,4 +45,6 @@ class ApiSubsidyController extends BaseController
         ];
 
     }
+
+
 }

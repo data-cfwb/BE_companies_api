@@ -55,8 +55,6 @@ class ApiEnterpriseController extends Controller
         return new EnterpriseDigestResource($enterprise);
     }
 
-    
-
     public function random()
     {
         # find a random enterprise
