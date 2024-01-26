@@ -102,6 +102,11 @@ class Enterprise extends Model
         ->orderBy('Classification');
     }
 
+    public function getSubsidiesSumAttribute()
+    {
+        return $this->subsidies->sum('AmountInEuros');
+    }
+    
     public function getLanguagesAttribute()
     {
         return $this->denominations->pluck('short_language_label')->unique()->toArray();

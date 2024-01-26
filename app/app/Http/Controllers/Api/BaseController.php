@@ -82,13 +82,13 @@ class BaseController extends Controller
                 ['addresses', 'denominations']
             )->whereHas('addresses', function ($query) use ($request) {
                 $query->where('Zipcode', $request->input('Zipcode'));
-            })->get();
+            })->get()->sortByDesc('subsidies_sum');
         } else {
             $enterprises = Enterprise::whereIn('EnterpriseNumber', $enterprisesNumber)->with(
                 ['addresses', 'denominations']
-            )->get();
+            )->get()->sortByDesc('subsidies_sum');
         }
-        
+
         $enterprises->load('contacts', 'establishments', 'activities', 'branches');
         
         // return the data with the input
