@@ -20,53 +20,55 @@ class EnterpriseDigestResource extends BaseResource
             # Denominations as comma separated string
             'denomination' => $this->denominations->pluck('Denomination')->implode(' ; '),
             'addresses' => $this->addresses->pluck('short')->implode(' ; '),
+            'languages' => $this->denominations->pluck('short_language_label')->unique(),
 
             'NACE2008_main'
                 => $this->activities->where('Classification', "MAIN")
                 ->where('NaceVersion', '2008')
-                ->pluck('NaceCode')->implode(', '),
+                ->pluck('NaceCode')->implode(' ; '),
 
             'NACE2008_seco'
                 => $this->activities->where('Classification', "SECO")
                 ->where('NaceVersion', '2008')
-                ->pluck('NaceCode')->implode(', '),
+                ->pluck('NaceCode')->implode(' ; '),
 
             'NACE2003_main'
                 => $this->activities->where('Classification', "MAIN")
                 ->where('NaceVersion', '2003')
-                ->pluck('NaceCode')->implode(', '),
+                ->pluck('NaceCode')->implode(' ; '),
 
             'NACE2003_seco'
                 => $this->activities->where('Classification', "SECO")
                 ->where('NaceVersion', '2003')
-                ->pluck('NaceCode')->implode(', '),
+                ->pluck('NaceCode')->implode(' ; '),
 
             'establishments' => $this->establishments->pluck('EstablishmentNumber')->implode(' ; '),
 
             'branches' => $this->branches->pluck(['Id'])->implode(' ; '),
             
-            'contacts' => $this->contacts->pluck('Value')->implode(', '),
-            'status' => $this->StatusLabel->pluck('Description')->implode(', '),
+            'contacts' => $this->contacts->pluck('Value')->implode(' ; '),
+            'status' => $this->StatusLabel->pluck('Description')->implode(' ; '),
 
-            'type_entreprise_fr' => $this->TypeOfEnterpriseLabel->where('Language', 'FR')->pluck('Description')->implode(', '),
-            'type_entreprise_nl' => $this->TypeOfEnterpriseLabel->where('Language', 'NL')->pluck('Description')->implode(', '),
+            'type_entreprise_fr' => $this->TypeOfEnterpriseLabel->where('Language', 'FR')->pluck('Description')->implode(' ; '),
+            'type_entreprise_nl' => $this->TypeOfEnterpriseLabel->where('Language', 'NL')->pluck('Description')->implode(' ; '),
 
-            'juridical_situation_fr' => $this->JuridicalSituationLabel->where('Language', 'FR')->pluck('Description')->implode(', '),
-            'juridical_situation_nl' => $this->JuridicalSituationLabel->where('Language', 'NL')->pluck('Description')->implode(', '),
+            'juridical_situation_fr' => $this->JuridicalSituationLabel->where('Language', 'FR')->pluck('Description')->implode(' ; '),
+            'juridical_situation_nl' => $this->JuridicalSituationLabel->where('Language', 'NL')->pluck('Description')->implode(' ; '),
 
-            'juridical_form_fr' => $this->JuridicalFormLabel->where('Language', 'FR')->pluck('Description')->implode(', '),
-            'juridical_form_nl' => $this->JuridicalFormLabel->where('Language', 'NL')->pluck('Description')->implode(', '),
+            'juridical_form_fr' => $this->JuridicalFormLabel->where('Language', 'FR')->pluck('Description')->implode(' ; '),
+            'juridical_form_nl' => $this->JuridicalFormLabel->where('Language', 'NL')->pluck('Description')->implode(' ; '),
             
-            'juridical_form_cac_fr' => $this->JuridicalFormCACLabel->where('Language', 'FR')->pluck('Description')->implode(', '),
-            'juridical_form_cac_nl' => $this->JuridicalFormCACLabel->where('Language', 'NL')->pluck('Description')->implode(', '),
+            'juridical_form_cac_fr' => $this->JuridicalFormCACLabel->where('Language', 'FR')->pluck('Description')->implode(' ; '),
+            'juridical_form_cac_nl' => $this->JuridicalFormCACLabel->where('Language', 'NL')->pluck('Description')->implode(' ; '),
             
             'subsidies_sum' => $this->subsidies->sum('AmountInEuros'),
 
             'StartDate' => $this->StartDate,
-            'links' => [
-                'self' => route('api.enterprises.showDigest', [$this->EnterpriseNumber]),
-                'exhaustive_info' => route('api.enterprises.show', [$this->EnterpriseNumber]),
-            ],
+       
+            'self' => route('api.enterprises.showDigest', [$this->EnterpriseNumber]),
+            'exhaustive_info' => route('api.enterprises.show', [$this->EnterpriseNumber]),
+            'frontend_link' => 'https://subventions.datawb.be/enterprises/' . $this->EnterpriseNumber,
+  
             // 'Denominations' => $this->denominations,
 
             // 'Addresses' => $this->addresses,

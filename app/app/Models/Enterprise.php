@@ -62,7 +62,6 @@ class Enterprise extends Model
         return $this->hasMany(Denomination::class, 'EntityNumber', 'EnterpriseNumber');
     }
 
-
     public function addresses()
     {
         return $this->hasMany(Address::class, 'EntityNumber', 'EnterpriseNumber');
@@ -105,7 +104,7 @@ class Enterprise extends Model
 
     public function getLanguagesAttribute()
     {
-        return $this->denominations->pluck('short_language_label')->unique();
+        return $this->denominations->pluck('short_language_label')->unique()->toArray();
     }
 
     public function getSubsidiesMapByYearAttribute()
@@ -151,26 +150,34 @@ class Enterprise extends Model
     public function getExternalLinksAttribute()
     {
         return [
+            'bce' => [
+                'service_name' => 'Référence sur la Banque-Carrefour des Entreprises de Belgique',
+                'href' =>  'https://kbopub.economie.fgov.be/kbopub/toonondernemingps.html?lang=fr&ondernemingsnummer=' . $this->EnterpriseNumberDotLess,
+            ],
+            'nbb' => [
+                'service_name' => 'Central des bilans de la Banque Nationale de Belgique',
+                'href' =>  'https://consult.cbso.nbb.be/consult-enterprise/' . $this->EnterpriseNumberDotLess,
+            ],
             'notaire' => [
                 'service_name' => 'Statuts et pouvoirs de représentation',
                 'href' =>  'https://statuts.notaire.be/stapor_v1/enterprise/' . $this->EnterpriseNumberDotLess . '/statutes',
             ],
-            'nbb' => [
-                'service_name' => 'Central Balance Sheet Office',
-                'href' =>  'https://consult.cbso.nbb.be/consult-enterprise/' . $this->EnterpriseNumberDotLess,
-            ],
+            
             'ejustice' => [
-                'service_name' => 'ejustice',
+                'service_name' => 'Données de l\'entreprise sur le site du Moniteur Belge',
                 'href' =>  'http://www.ejustice.just.fgov.be/cgi_tsv/tsv_rech.pl?language=fr&btw=' . $this->EnterpriseNumberDotLess . '&liste=Liste',
             ],
-            'bce' => [
-                'service_name' => 'Banque-Carrefour des Entreprises',
-                'href' =>  'https://kbopub.economie.fgov.be/kbopub/toonondernemingps.html?lang=fr&ondernemingsnummer=' . $this->EnterpriseNumberDotLess,
-            ],
             'map' => [
-                'service_name' => 'Address',
+                'service_name' => 'Adresse sur OpenStreetMap',
                 'href' => ($this->addresses->first() ? 'https://www.openstreetmap.org/search?query=' . urlencode($this->addresses->first()->short) : 'no address found'),
             ],
+        ];
+    }
+
+    # data sources
+    public function getDataSourcesLinksAttribute()
+    {
+        return [
             'cadastre_2019' => [
                 'service_name' => 'Cadastre des subventions 2019',
                 'href' => 'https://www.odwb.be/explore/dataset/fwb-cadastre-des-subventions-2019/table/?disjunctive.ministre&disjunctive.competence&disjunctive.administration&disjunctive.code_postal&disjunctive.forme_juridique&sort=-liquidation&q=' . urlencode($this->denominations->first()->Denomination),
